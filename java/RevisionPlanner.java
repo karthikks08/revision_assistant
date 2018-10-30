@@ -12,10 +12,27 @@ public class RevisionPlanner implements Revision{
 	@Override
 	public void add(String topic){
 		BufferedWriter writer = null;
+		BufferedReader reader = null;
+		// read all lines
+		String oldText = "";
 		try{
-			FileWriter file = new FileWriter("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt", true);
+			FileReader fReader = new FileReader("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt");
+			reader = new BufferedReader(fReader);
+			String line = null;
+			while((line = reader.readLine()) != null){
+				if(!isNewDay(new LocalDate(line)){
+					oldText = line + "," +  topic;
+				}
+				oldText = oldText + "\n" + line;
+			}
+			reader.close();
+		}catch(IOException e){
+			System.out.println(e.getMessage());
+		}
+		try{
+			FileWriter file = new FileWriter("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt");
 			writer = new BufferedWriter(file);
-			writer.write(LocalDate.now().plusDays(Integer.parseInt(topic)) + "," + topic + "\n");
+			writer.write(LocalDate.now() + "," + topic + oldText);
 			writer.close();
 		}catch(IOException e){
 			System.out.println(e.getMessage());
@@ -25,6 +42,10 @@ public class RevisionPlanner implements Revision{
 	@Override
 	public boolean remove(int index){
 		return false;
+	}
+
+	private boolean isNewDay(LocalDate date){
+		return LocalDate.now().isEqual(date);
 	}
 
     @Override
