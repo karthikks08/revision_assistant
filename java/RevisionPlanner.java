@@ -2,8 +2,8 @@ import java.io.*;
 import java.time.LocalDate;
 
 public class RevisionPlanner implements Revision{
-	private int[] revisionGaps = { 0, 1, 2, 3, 5, 7, 10, 15, 15, 30};
-
+	// 1-today, 2-previous day, 4-topics before 3 days
+	private int[] revisionGaps = { 1, 2, 4, 7, 12, 20, 30, 45, 60};
 	@Override
 	public void help(){
 
@@ -56,14 +56,20 @@ public class RevisionPlanner implements Revision{
 	}
 
     @Override
-	public void display(){
+	public void todaysTopics(){
 		BufferedReader reader = null;
 		try{
 			FileReader fReader = new FileReader("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt");
 			reader = new BufferedReader(fReader);
 			String line = null;
+			int lineCount = 0;
+			int nextRevisionGap = 0;
 			while((line = reader.readLine()) != null){
-				System.out.println(line);
+				lineCount++;
+				if(lineCount == revisionGaps[nextRevisionGap]){
+					System.out.println(line);
+					nextRevisionGap++;
+				}
 			}
 			reader.close();
 		}catch(IOException e){
