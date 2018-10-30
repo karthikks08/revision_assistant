@@ -2,6 +2,8 @@ import java.io.*;
 import java.time.LocalDate;
 
 public class RevisionPlanner implements Revision{
+	private int[] revisionGaps = { 0, 1, 2, 3, 5, 7, 10, 15, 15, 30};
+
 	@Override
 	public void help(){
 
@@ -13,7 +15,7 @@ public class RevisionPlanner implements Revision{
 		try{
 			FileWriter file = new FileWriter("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt", true);
 			writer = new BufferedWriter(file);
-			writer.write(LocalDate.now() + "," + topic + "\n");
+			writer.write(LocalDate.now().plusDays(Integer.parseInt(topic)) + "," + topic + "\n");
 			writer.close();
 		}catch(IOException e){
 			System.out.println(e.getMessage());
@@ -25,6 +27,7 @@ public class RevisionPlanner implements Revision{
 		return false;
 	}
 
+    @Override
 	public void display(){
 		BufferedReader reader = null;
 		try{
