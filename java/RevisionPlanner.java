@@ -19,11 +19,17 @@ public class RevisionPlanner implements Revision{
 			FileReader fReader = new FileReader("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt");
 			reader = new BufferedReader(fReader);
 			String line = null;
+			line = reader.readLine();
+			if(line != null && isToday(line.split(":")[0])){
+				// adding more topics on same day
+				oldText = line + "," +  topic;
+			}else{
+				// add first topic of the day
+				oldText = LocalDate.now() + ":" + topic;
+				oldText = oldText + "\n" + line;				
+			}
 			while((line = reader.readLine()) != null){
-				if(!isNewDay(new LocalDate(line)){
-					oldText = line + "," +  topic;
-				}
-				oldText = oldText + "\n" + line;
+				oldText = oldText + "\n" + line;				
 			}
 			reader.close();
 		}catch(IOException e){
@@ -32,7 +38,7 @@ public class RevisionPlanner implements Revision{
 		try{
 			FileWriter file = new FileWriter("/home/karthik/Desktop/Oct29/revision_assistant/files/revision.txt");
 			writer = new BufferedWriter(file);
-			writer.write(LocalDate.now() + "," + topic + oldText);
+			writer.write(oldText);
 			writer.close();
 		}catch(IOException e){
 			System.out.println(e.getMessage());
@@ -44,8 +50,8 @@ public class RevisionPlanner implements Revision{
 		return false;
 	}
 
-	private boolean isNewDay(LocalDate date){
-		return LocalDate.now().isEqual(date);
+	private boolean isToday(String date){
+		return LocalDate.now().toString().equals(date);
 	}
 
     @Override
