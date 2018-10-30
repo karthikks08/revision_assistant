@@ -20,13 +20,14 @@ public class RevisionPlanner implements Revision{
 			reader = new BufferedReader(fReader);
 			String line = null;
 			line = reader.readLine();
+			// Test first line
 			if(line != null && isToday(line.split(":")[0])){
 				// adding more topics on same day
 				oldText = line + "," +  topic;
 			}else{
 				// add first topic of the day
 				oldText = LocalDate.now() + ":" + topic;
-				oldText = oldText + "\n" + line;				
+				oldText = oldText + "\n" + ((line != null) ? line : "");				
 			}
 			while((line = reader.readLine()) != null){
 				oldText = oldText + "\n" + line;				
