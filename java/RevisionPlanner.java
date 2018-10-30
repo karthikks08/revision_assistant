@@ -1,15 +1,13 @@
 import java.io.*;
 import java.time.LocalDate;
 
-public class RevisionPlanner implements Revision{
+public class RevisionPlanner{
 	// 1-today, 2-previous day, 4-topics before 3 days
 	private int[] revisionGaps = { 1, 2, 4, 7, 12, 20, 30, 45, 60};
-	@Override
 	public void help(){
 
 	}
 
-	@Override
 	public void add(String topic){
 		BufferedWriter writer = null;
 		BufferedReader reader = null;
@@ -46,7 +44,6 @@ public class RevisionPlanner implements Revision{
 		}
 	}
 
-	@Override
 	public boolean remove(int index){
 		return false;
 	}
@@ -55,7 +52,6 @@ public class RevisionPlanner implements Revision{
 		return LocalDate.now().toString().equals(date);
 	}
 
-    @Override
 	public void todaysTopics(){
 		BufferedReader reader = null;
 		try{
