@@ -1,5 +1,5 @@
 # revision_assistant
-java program that helps me to revise the topics i learned. (Spaced repetition technique)
+java program that helps you to revise the topics effectively (Spaced repetition technique)
 
 
 
